@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+    app:
+        build: 
+            context: .
+            dockerfile: Dockerfile.app
+        volumes:
+            - ./results:/app/files
+    nginx:
+        image: nginx
+        configs:
+            - source: ./nginx.conf
+              target: /etc/nginx/nginx.conf       
+        ports:
+            - 80:80
+            - 443:443
+        secrets:
+           - source: cert
+             target: /etc/ssl/private/cert.pem
+           - source: key
+             target: /etc/ssl/private/key.pem
+        env_file:
+            - .env
+secrets:
+    cert:
+        file: cert.pem
+    key:
+        file: key.pem
+
+
+

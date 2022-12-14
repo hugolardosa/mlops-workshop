@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+    app:
+        build: 
+            context: .
+            dockerfile: Dockerfile.app
+        volumes:
+            - ./results:/app/files
+    nginx:
+        image: nginx
+        configs:
+            - source: ./nginx.conf
+              target: /etc/nginx/nginx.conf       
+        ports:
+            - 8080:80
+
+
